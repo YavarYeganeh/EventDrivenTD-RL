@@ -7,7 +7,7 @@
 
 The framework was developed in the context of event-driven reinforcement learning for semiconductor fabrication, but the public repository is intended to provide the **generic RL framework only**. It does **not** include proprietary industrial data, private simulator internals, confidential scenario files, or application-specific database schemas.
 
-*-- Documentation will be added!*
+*-- Documentation will be added soon!*
 
 
 ## Citation

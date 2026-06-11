@@ -10,3 +10,13 @@ The framework was developed in the context of event-driven reinforcement learnin
 
 ## Citation
 Yeganeh, Y., Shekari, M., Frigerio, N., Pagano, D., & Matta, A. (2026). *Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication*. *arXiv preprint arXiv:2606.10705*.
+
+```
+@article{yeganeh2026eventdrivenrl,
+  title={Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication},
+  author={Yeganeh, Yavar and Shekari, Mahsa and Frigerio, Nicla and Pagano, Daniele and Matta, Andrea},
+  journal={arXiv preprint arXiv:2606.10705}, 
+  year={2026},
+  url={https://arxiv.org/abs/2606.10705}
+}
+```

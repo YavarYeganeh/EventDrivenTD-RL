@@ -1,6 +1,7 @@
-# Overview
 
-**Event-driven reinforcement learning for long-horizon control in asynchronous, discrete-event systems.**
+<h2 align="center">
+    Event-driven Reinforcement Learning for Long-horizon Control in Asynchronous, Discrete-event Systems
+</h2>
 
 `EventDrivenTD-RL` is a modular reinforcement learning framework for systems where decisions are triggered by events rather than fixed time steps. It is designed for long-horizon control problems with delayed feedback, adaptive candidate sets, overlapping events, and system-level objectives.
 

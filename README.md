@@ -18,7 +18,7 @@ This repository accompanies the research framework described in:
 The paper studies reinforcement learning for long-horizon control in event-driven systems, using semiconductor fabrication as a challenging representative application. The code in this repository is intended to provide the reusable RL framework independent of proprietary data and simulator internals.
 
 <p align="center">
-    <a href="https://arxiv.org/abs/2505.19867">📄 Read the Paper (arXiv:2505.19867)</a>
+    <a href="https://arxiv.org/abs/2606.10705">📄 Read the Paper (arXiv:2606.10705)</a>
 </p>
 
 ## Overview

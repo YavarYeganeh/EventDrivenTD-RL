@@ -25,23 +25,24 @@ The paper studies reinforcement learning for long-horizon control in event-drive
 
 Many real-world control systems are naturally event-driven:
 
-- manufacturing and production systems;
-- logistics and supply chains;
-- healthcare operations;
-- telecommunications and network control;
-- resource-constrained service systems;
+- Manufacturing and production systems;
+- Semiconductor fabrications
+- Logistics and supply chains;
+- Healthcare operations;
+- Telecommunications and network control;
+- Resource-constrained service systems;
 - SimPy and discrete-event simulation environments;
-- digital-twin-based control systems.
+- Digital-twin-based control systems.
 
 In such systems:
 
-- actions occur at irregular decision times;
-- actions may have variable duration;
-- multiple events may overlap;
-- feasible action sets may change at every decision;
-- local actions may influence delayed global objectives;
-- rewards may be sparse, delayed, or computed over time windows;
-- one-step Markov transitions may be insufficient for credit assignment.
+- Dctions occur at irregular decision times;
+- Actions may have variable duration;
+- Multiple events may overlap;
+- Feasible action sets may change at every decision;
+- Local actions may influence delayed global objectives;
+- Rewards may be sparse, delayed, or computed over time windows;
+- One-step Markov transitions may be insufficient for credit assignment.
 
 `EventDrivenTD-RL` addresses these issues by separating the reusable RL core from the application-specific environment through a modular adapter structure.
 

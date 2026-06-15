@@ -57,7 +57,22 @@ In such systems:
 
 `EventDrivenTD-RL` addresses these issues by separating the reusable RL core from the application-specific environment through a modular adapter structure.
 
-## Main Design Principles
+## Key Features
+
+- Generic event-driven simulation interface
+- SimPy-compatible adapter structure
+- Candidate-set action selection with variable action spaces
+- Event-level and group-level reward support
+- Event-group temporal-difference learning
+- Offline training from stored experience
+- Online training through simulator interaction
+- Generic encoder interfaces
+- Generic reward-model interfaces
+- Replay-buffer and sampler utilities
+- Multiple model-free RL backbones
+- Modular agent factory
+- Generic placeholder system for testing package wiring
+- Compatibility wrappers for migration from application-specific systems
 
 The package separates:
 

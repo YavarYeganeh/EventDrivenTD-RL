@@ -134,9 +134,9 @@ The framework includes wrappers and agents for several reinforcement learning fa
 | Weighted TD | Weighted temporal-difference aggregation for event groups |
 | Heuristic agents | Random, FIFO-style, and minimum-feature / SPT-style baselines |
 
-*-- More could be integrated!*
+More algorithms can be integrated.
 
-## Simulator Integration
+<!-- ## Simulator Integration
 
 A key motivation of the package is efficient training. When integrated with a SimPy-compatible simulator, multiple simulation workers can run in parallel on CPU while the trainer performs batched neural-network updates on GPU. This enables simultaneous environment interaction, replay generation, policy optimization, and checkpoint synchronization, which is especially useful for long-horizon event-driven systems where simulation and learning can otherwise become computational bottlenecks.
 
@@ -169,6 +169,55 @@ Updated policy
 ```
 
 This design keeps simulator-specific logic outside the RL core and allows the same framework to be reused across different event-driven systems.
+
+--- -->
+
+
+## Simulator Integration
+
+`EventDrivenTD-RL` provides the reinforcement-learning framework, but it is not a standalone simulator. To run meaningful experiments, it must be integrated with an external event-driven simulator or environment, preferably a **SimPy-compatible simulator**.
+
+The package follows an **ISM-style integration concept**: the simulator handles system dynamics, event execution, and candidate generation, while the RL framework handles state/action encoding, reward construction, replay storage, sampling, policy optimization, and checkpoint synchronization.
+
+New simulators should be connected through the provided **system and action interfaces** rather than by modifying the RL core. A simulator adapter should expose the current state, feasible candidate actions, action execution, and generated experience records.
+
+A key motivation is efficient training. In online mode, multiple simulation workers can run in parallel on CPU while the trainer performs batched neural-network updates on GPU. This enables simultaneous simulator interaction, replay generation, policy optimization, and policy synchronization, which is especially useful for long-horizon event-driven systems.
+
+```text
+Event-driven simulator
+        |
+        v
+System / action interface
+        |
+        v
+Encoder + reward model
+        |
+        v
+Replay buffer and sampler
+        |
+        v
+RL algorithm and agent
+        |
+        v
+Updated policy
+```
+
+This design keeps simulator-specific logic outside the RL core and allows the same framework to be reused across different event-driven systems.
+
+Conceptually, a simulator adapter should provide:
+```text
+def get_state():
+    ...
+
+def get_candidate_actions():
+    ...
+
+def apply_action(action):
+    ...
+
+def collect_experience():
+    ...
+```
 
 ---
 

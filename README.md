@@ -18,8 +18,6 @@
 
 The framework was developed in the context of event-driven reinforcement learning for semiconductor fabrication, but the public repository is intended to provide the **generic RL framework only**. It does **not** include proprietary industrial data, private simulator internals, confidential scenario files, or application-specific database schemas.
 
-*-- Documentation will be added soon!*
-
 ## Associated Paper
 
 This repository accompanies the research framework described in:
@@ -118,6 +116,22 @@ Together, the two modes support a practical workflow for long-horizon event-driv
 | Offline | Fixed replay/logged data | Pretraining, conservative RL, model selection | No simulator interaction needed during training |
 | Online | New simulator/system interaction | Fine-tuning, exploration, policy improvement | CPU simulation and GPU training can be pipelined |
 | Offline → Online | Logged data followed by interaction | Safer initialization before online learning | Reduces inefficient exploration |
+
+## Supported RL Backbones
+
+The framework includes wrappers and agents for several reinforcement learning families in the different modes adopted by the proposed Aggregating Temporal Difference method:
+
+| Algorithm family | Description |
+|---|---|
+| DQL / DDQN | Value-based learning with target networks |
+| CQL | Conservative Q-learning for offline RL |
+| IQL | Implicit Q-learning with value learning and advantage-weighted policy extraction |
+| PPO-style methods | Clipped policy-gradient updates with event-driven advantage construction |
+| SAC-style methods | Entropy-regularized actor-critic learning |
+| Weighted TD | Weighted temporal-difference aggregation for event groups |
+| Heuristic agents | Random, FIFO-style, and minimum-feature / SPT-style baselines |
+
+*-- More could be integrated!*
 
 ## Requirements
 

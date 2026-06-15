@@ -14,7 +14,7 @@
   </em>
 </p>
 
-`EventDrivenTD-RL` is a modular reinforcement learning framework for systems where decisions are triggered by events rather than fixed time steps. It is designed for long-horizon control problems with delayed feedback, adaptive candidate sets, overlapping events, and system-level objectives.
+`EventDrivenTD-RL` is a modular reinforcement learning framework for systems where decisions/actions are triggered by events rather than fixed time steps. It is designed for long-horizon control problems with delayed feedback, adaptive candidate sets, overlapping events, and system-level objectives.
 
 The framework was developed in the context of event-driven reinforcement learning for semiconductor fabrication, but the public repository is intended to provide the **generic RL framework only**. It does **not** include proprietary industrial data, private simulator internals, confidential scenario files, or application-specific database schemas.
 
@@ -71,6 +71,9 @@ In such systems:
 - Modular agent factory
 - Generic placeholder system for testing package wiring
 - Compatibility wrappers for migration from application-specific systems
+- Efficient GPU-based policy optimization
+- Parallel simulation-worker support for online training
+- Simultaneous simulator interaction and trainer updates through shared-memory coordination
 
 The package separates:
 
@@ -134,6 +137,8 @@ The framework includes wrappers and agents for several reinforcement learning fa
 *-- More could be integrated!*
 
 ## Simulator Integration
+
+A key motivation of the package is efficient training. When integrated with a SimPy-compatible simulator, multiple simulation workers can run in parallel on CPU while the trainer performs batched neural-network updates on GPU. This enables simultaneous environment interaction, replay generation, policy optimization, and checkpoint synchronization, which is especially useful for long-horizon event-driven systems where simulation and learning can otherwise become computational bottlenecks.
 
 `EventDrivenTD-RL` provides the reinforcement-learning framework, but it is not a standalone simulator.  
 To run meaningful experiments, the framework must be integrated with an external event-driven simulator or environment.
@@ -456,7 +461,7 @@ Yeganeh, Y., Shekari, M., Frigerio, N., Pagano, D., & Matta, A. (2026). *Event-D
   title={Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication},
   author={Yeganeh, Yavar and Shekari, Mahsa and Frigerio, Nicla and Pagano, Daniele and Matta, Andrea},
   journal={arXiv preprint arXiv:2606.10705},
-  year={2026}
+  year={2026},
   url={https://arxiv.org/abs/2606.10705}
 }
 ```

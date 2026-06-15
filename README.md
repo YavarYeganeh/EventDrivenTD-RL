@@ -110,15 +110,14 @@ logging and evaluation
 
 In **offline training**, the policy is learned from a fixed dataset of previously collected experience. The simulator or environment does not need to run during gradient updates: stored transitions are loaded, sampled through the replay/sampler interface, and used to train the agent efficiently. This mode is useful for pretraining, conservative offline RL, checkpoint selection, and learning when direct exploration is costly, risky, or unavailable.
 
-In **online training**, the policy is improved through interaction with an event-driven simulator or system adapter. The environment generates new experience while the training process updates the agent from recent or replayed data. This enables policy synchronization, simulator-based fine-tuning, adaptive exploration, and continued improvement after offline pretraining. The design is efficient because simulation can run on CPU while neural-network optimization runs on GPU.
+In **online training**, the policy is improved through interaction with an event-driven simulator or system adapter. The environment generates new experience while the training process updates the agent from recent or replayed data. This enables policy synchronization, simulator-based fine-tuning, adaptive exploration, and continued improvement after offline pretraining. The design is efficient because of parallel simulations can run on CPU while neural-network optimization runs on GPU.
 
 Together, the two modes support a practical workflow for long-horizon event-driven control: learn an initial policy from stored experience, then refine it through controlled online interaction.
 
 | Mode | Experience source | Main use | Efficiency benefit |
 |---|---|---|---|
-| Offline | Fixed replay/logged data | Pretraining, conservative RL, model selection | No simulator interaction needed during training |
-| Online | New simulator/system interaction | Fine-tuning, exploration, policy improvement | CPU simulation and GPU training can be pipelined |
-| Offline → Online | Logged data followed by interaction | Safer initialization before online learning | Reduces inefficient exploration |
+| Offline | Fixed replay/logged data | Pretraining, offline policy optimization, conservative RL, model selection | No simulator interaction needed during training, CPU data loading and GPU training |
+| Online | New simulator/system interaction | Fine-tuning, online policy optimization, exploration, policy improvement, safe initialization before live interaction | CPU simulations and GPU training can be pipelined |
 
 ## Supported RL Backbones
 

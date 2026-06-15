@@ -171,3 +171,11 @@ Yeganeh, Y., Shekari, M., Frigerio, N., Pagano, D., & Matta, A. (2026). *Event-D
   url={https://arxiv.org/abs/2606.10705}
 }
 ```
+
+## Contributing
+
+Contributions are welcome. Feel free to contribute by improving the code, adding examples, extending documentation, fixing bugs, or proposing new event-driven RL components.
+
+For bugs, questions, feature requests, or documentation problems, please open an issue on the GitHub repository.
+
+When contributing, please keep the repository generic and avoid adding proprietary data, private simulator details, confidential scenario identifiers, or application-specific schemas.

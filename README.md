@@ -73,6 +73,39 @@ policy optimization
 logging and evaluation
 ```
 
+## Training Modes
+
+`EventDrivenTD-RL` supports two complementary training modes: **offline training** and **online training**. Both use the same modular RL core, including the encoder, reward, replay, sampler, and algorithm interfaces, but differ in how experience is generated and consumed.
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="img/12_offline_training.png" alt="Offline training pipeline" width="100%"/>
+      <br/>
+      <strong>Offline training</strong>
+    </td>
+    <td align="center" width="50%">
+      <img src="img/13_online_training.png" alt="Online training pipeline" width="100%"/>
+      <br/>
+      <strong>Online training</strong>
+    </td>
+  </tr>
+</table>
+
+In **offline training**, the policy is learned from a fixed dataset of previously collected experience. The simulator or environment does not need to run during gradient updates: stored transitions are loaded, sampled through the replay/sampler interface, and used to train the agent efficiently. This mode is useful for pretraining, conservative offline RL, checkpoint selection, and learning when direct exploration is costly, risky, or unavailable.
+
+In **online training**, the policy is improved through interaction with an event-driven simulator or system adapter. The environment generates new experience while the training process updates the agent from recent or replayed data. This enables policy synchronization, simulator-based fine-tuning, adaptive exploration, and continued improvement after offline pretraining. The design is efficient because simulation can run on CPU while neural-network optimization runs on GPU.
+
+Together, the two modes support a practical workflow for long-horizon event-driven control: learn an initial policy from stored experience, then refine it through controlled online interaction.
+
+| Mode | Experience source | Main use | Efficiency benefit |
+|---|---|---|---|
+| Offline | Fixed replay/logged data | Pretraining, conservative RL, model selection | No simulator interaction needed during training |
+| Online | New simulator/system interaction | Fine-tuning, exploration, policy improvement | CPU simulation and GPU training can be pipelined |
+| Offline → Online | Logged data followed by interaction | Safer initialization before online learning | Reduces inefficient exploration |
+
+
+
 ## Citation
 
 Yeganeh, Y., Shekari, M., Frigerio, N., Pagano, D., & Matta, A. (2026). *Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication*. *arXiv preprint arXiv:2606.10705*.

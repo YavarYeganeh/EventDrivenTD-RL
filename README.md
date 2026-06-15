@@ -134,7 +134,7 @@ The framework includes wrappers and agents for several reinforcement learning fa
 | Weighted TD | Weighted temporal-difference aggregation for event groups |
 | Heuristic agents | Random, FIFO-style, and minimum-feature / SPT-style baselines |
 
-More algorithms can be integrated.
+*More algorithms can be integrated.*
 
 <!-- ## Simulator Integration
 

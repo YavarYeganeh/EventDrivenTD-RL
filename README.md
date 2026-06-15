@@ -93,12 +93,12 @@ logging and evaluation
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="img/12_offline_training.png" alt="Offline training pipeline" width="100%"/>
+      <img src="img/12_offline_training.png" alt="Offline Training pipeline" width="100%"/>
       <br/>
       <strong>Offline training</strong>
     </td>
     <td align="center" width="50%">
-      <img src="img/13_online_training.png" alt="Online training pipeline" width="100%"/>
+      <img src="img/13_online_training.png" alt="Online Training pipeline" width="100%"/>
       <br/>
       <strong>Online training</strong>
     </td>
@@ -132,6 +132,132 @@ The framework includes wrappers and agents for several reinforcement learning fa
 | Heuristic agents | Random, FIFO-style, and minimum-feature / SPT-style baselines |
 
 *-- More could be integrated!*
+
+## Simulator Integration
+
+`EventDrivenTD-RL` provides the reinforcement-learning framework, but it is not a standalone simulator.  
+To run meaningful experiments, the framework must be integrated with an external event-driven simulator or environment.
+
+The preferred integration style is a **SimPy-compatible simulator**, since the framework is designed around asynchronous event execution, variable decision times, and event-driven interaction. Other discrete-event simulators can also be used if they expose the required adapter interface.
+
+The simulator is responsible for system evolution, event execution, and candidate generation. The RL framework is responsible for encoding, reward construction, replay storage, sampling, policy optimization, checkpointing, and training coordination.
+
+In online mode, the framework supports simultaneous simulation and training. Simulation workers can run on CPU, while the learning process performs neural-network optimization on GPU. Experience and synchronization signals can be exchanged through shared-memory structures, enabling efficient interaction between the simulator and trainer.
+
+```text
+Event-driven simulator
+        |
+        v
+System adapter
+        |
+        v
+Encoder + reward model
+        |
+        v
+Replay buffer and sampler
+        |
+        v
+RL algorithm and agent
+        |
+        v
+Updated policy
+```
+
+This design keeps simulator-specific logic outside the RL core and allows the same framework to be reused across different event-driven systems.
+
+---
+
+## Code Structure
+
+The repository is organized around three main executable blocks:
+
+```text
+simulate.py
+train_offline.py
+train_online.py
+```
+
+These scripts form the main user-facing interface of the framework.
+
+```text
+.
+├── simulate.py
+├── train_offline.py
+├── train_online.py
+│
+├── framework/
+│   ├── agent.py
+│   ├── encoder.py
+│   ├── replay_buffer.py
+│   ├── sampler.py
+│   ├── reward.py
+│   ├── utils.py
+│   ├── agents/
+│   │   ├── random.py
+│   │   ├── fifo.py
+│   │   ├── spt.py
+│   │   ├── dql.py
+│   │   ├── cql.py
+│   │   ├── iql.py
+│   │   ├── ac_generic.py
+│   │   └── ppo_v.py
+│   └── algorithms/
+│       ├── offline/
+│       └── online/
+│
+├── sim/*
+│
+├── encoder/*
+│
+├── rewards/*
+│
+└── preprocessing/*
+```
+
+### Main Blocks
+
+| Block | Purpose |
+|---|---|
+| `simulate.py` | Starts the simulation interface and connects the RL policy to the event-driven environment. |
+| `train_offline.py` | Trains an agent from stored experience without active simulator interaction. |
+| `train_online.py` | Trains an agent while interacting with one or more simulation workers. |
+
+### Framework Core
+
+The `framework/` directory contains the reusable RL core.
+
+| Module | Purpose |
+|---|---|
+| `framework/agent.py` | Agent construction, policy loading, and checkpoint utilities. |
+| `framework/replay_buffer.py` | Experience storage for event-driven transitions. |
+| `framework/sampler.py` | Sampling and temporal aggregation of event-driven experience. |
+| `framework/reward.py` | Reward aggregation for event-level and group-level feedback. |
+| `framework/encoder.py` | Bridge between simulator-specific encodings and the RL core. |
+| `framework/utils.py` | Shared utilities for logging, seeding, exploration, and process coordination. |
+
+### Agents and Algorithms
+
+The repository already includes several agents and algorithm implementations under:
+
+```text
+framework/agents/
+framework/algorithms/offline/
+framework/algorithms/online/
+```
+
+These modules are intentionally extensible. New agents, offline algorithms, online algorithms, samplers, encoders, or reward models can be added without changing the main training scripts, as long as they follow the same basic interfaces used by the existing implementations.
+
+```text
+new agent          -> framework/agents/
+new offline method -> framework/algorithms/offline/
+new online method  -> framework/algorithms/online/
+new sampler        -> framework/sampler.py or a sampler module
+new reward model   -> framework/reward.py or rewards/
+new simulator      -> sim/ or an external simulator adapter
+```
+
+---
+
 
 ## Requirements
 

@@ -313,6 +313,140 @@ pip install -r requirements.txt
 
 ---
 
+
+## Example Command-Line Usage
+
+The three main entry points can be used through command-line arguments.  
+The examples below are intentionally generic; exact arguments may depend on the simulator adapter, algorithm, sampler, and experiment configuration.
+
+---
+
+### Simulation
+
+The simulation entry point connects the RL policy to an event-driven simulator or runs a simulation worker during online training.
+
+```bash
+python simulate.py --system <simulator_adapter> --agent <agent_name> --load_path <checkpoint_path>
+```
+
+**Usage: `simulate.py [-h]`**
+
+- `--system` : Path to the simulator adapter or system builder.
+- `--agent` : Agent or policy type to use during simulation.
+- `--load_path` : Path to a saved checkpoint.
+- `--train` : Run the simulator as a training worker.
+- `--horizon_time` : Simulation horizon or stopping time.
+- `--output_dir` : Directory for logs, generated experience, or evaluation results.
+- `--precision` : Numerical precision used by the policy.
+
+Example:
+
+```bash
+python simulate.py \
+  --system my_project.my_system:build_system \
+  --agent dql \
+  --load_path ./results/checkpoints/agent.pt
+```
+
+---
+
+### Offline Training
+
+Offline training learns from stored experience without running the simulator during gradient updates.
+
+```bash
+python train_offline.py --algorithm <algorithm_name> --data_path <dataset_path> --num_iterations <steps>
+```
+
+**Usage: `train_offline.py [-h]`**
+
+- `--algorithm` : Offline RL algorithm to train.
+- `--data_path` : Path to stored experience or replay data.
+- `--meta_data_path` : Optional path to precomputed metadata.
+- `--num_iterations` : Number of training iterations.
+- `--seed` : Random seed for reproducibility.
+- `--device` : Training device, such as CPU or CUDA.
+- `--dtype` : Numerical precision for training.
+- `--td_agg` : Temporal-difference aggregation mode.
+- `--gamma` : Discount factor or bootstrapping coefficient.
+- `--lr` : Learning rate.
+- `--save_interval` : Checkpoint saving interval.
+
+Example:
+
+```bash
+python train_offline.py \
+  --algorithm dql \
+  --data_path ./data/offline \
+  --num_iterations 100000 \
+  --device cuda
+```
+
+---
+
+### Online Training
+
+Online training improves a policy through simulator interaction. Simulation workers generate new event-driven experience while the trainer updates the policy.
+
+```bash
+python train_online.py --algorithm <algorithm_name> --train_scenarios <source_ids> --num_iterations <steps>
+```
+
+**Usage: `train_online.py [-h]`**
+
+- `--algorithm` : Online RL algorithm to train.
+- `--train_scenarios` : List of simulator sources or training instances.
+- `--use_pretrained` : Start from a pretrained checkpoint.
+- `--load_path` : Path to the pretrained checkpoint.
+- `--num_iterations` : Number of online interaction/training iterations.
+- `--seed` : Random seed for reproducibility.
+- `--rb_cap` : Replay-buffer capacity.
+- `--sampler` : Sampling strategy for online replay.
+- `--td_agg` : Temporal-difference aggregation mode.
+- `--sim_interval_time` : Amount of simulator time advanced between training updates.
+- `--replay` : Number of replay passes per interaction step.
+- `--grad_steps` : Number of gradient updates per sampled batch.
+- `--precision` : Numerical precision for training and policy synchronization.
+
+Example:
+
+```bash
+python train_online.py \
+  --algorithm sac \
+  --use_pretrained \
+  --load_path ./results/offline/checkpoints/agent.pt \
+  --num_iterations 15000 \
+  --precision float32
+```
+
+---
+
+### Typical Workflow
+
+For instance, a complete workflow may look like:
+
+```bash
+# 1. Verify simulator integration
+python simulate.py \
+  --system my_project.my_system:build_system \
+  --agent random
+
+# 2. Train an initial policy offline
+python train_offline.py \
+  --algorithm dql \
+  --data_path ./data/offline \
+  --num_iterations 100000
+
+# 3. Fine-tune the policy online
+python train_online.py \
+  --algorithm sac \
+  --use_pretrained \
+  --load_path ./results/offline/checkpoints/agent.pt \
+  --num_iterations 15000
+```
+
+In practice, users should adapt these commands to their simulator, dataset, reward model, and training configuration.
+
 ## Citation
 
 Yeganeh, Y., Shekari, M., Frigerio, N., Pagano, D., & Matta, A. (2026). *Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication*. *arXiv preprint arXiv:2606.10705*.

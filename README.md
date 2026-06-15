@@ -104,18 +104,70 @@ Together, the two modes support a practical workflow for long-horizon event-driv
 | Online | New simulator/system interaction | Fine-tuning, exploration, policy improvement | CPU simulation and GPU training can be pipelined |
 | Offline → Online | Logged data followed by interaction | Safer initialization before online learning | Reduces inefficient exploration |
 
+## Requirements
 
+Main dependencies:
+
+```txt
+torch>=2.4.1
+numpy>=2.2.1
+pandas>=2.2.3
+simpy>=4.1.1
+```
+
+### Environment Setup
+
+Using `venv`:
+
+```bash
+git clone https://github.com/YavarYeganeh/EventDrivenTD-RL.git
+cd EventDrivenTD-RL
+
+python -m venv .venv
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Using Conda:
+
+```bash
+git clone https://github.com/YavarYeganeh/EventDrivenTD-RL.git
+cd EventDrivenTD-RL
+
+conda create -n eventdriven-td-rl python=3.10 -y
+conda activate eventdriven-td-rl
+
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+On Windows PowerShell:
+
+```powershell
+git clone https://github.com/YavarYeganeh/EventDrivenTD-RL.git
+cd EventDrivenTD-RL
+
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+---
 
 ## Citation
 
 Yeganeh, Y., Shekari, M., Frigerio, N., Pagano, D., & Matta, A. (2026). *Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication*. *arXiv preprint arXiv:2606.10705*.
 
 ```
-@article{yeganeh2026eventdrivenrl,
+@article{yeganeh2026event,
   title={Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semiconductor Fabrication},
   author={Yeganeh, Yavar and Shekari, Mahsa and Frigerio, Nicla and Pagano, Daniele and Matta, Andrea},
-  journal={arXiv preprint arXiv:2606.10705}, 
-  year={2026},
+  journal={arXiv preprint arXiv:2606.10705},
+  year={2026}
   url={https://arxiv.org/abs/2606.10705}
 }
 ```

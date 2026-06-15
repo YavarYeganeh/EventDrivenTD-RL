@@ -3,6 +3,8 @@
     Event-driven Reinforcement Learning for Long-horizon Control in Asynchronous, Discrete-event Systems
 </h2>
 
+---
+
 <p align="center">
   <img src="img/new_layout.png" alt="EventDrivenTD-RL modular architecture" width="900"/>
 </p>

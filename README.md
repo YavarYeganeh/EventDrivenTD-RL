@@ -220,7 +220,7 @@ def collect_experience():
     ...
 ```
 
----
+<!-- --- -->
 
 ## Code Structure
 
@@ -311,7 +311,7 @@ new reward model   -> framework/reward.py or rewards/
 new simulator      -> sim/ or an external simulator adapter
 ```
 
----
+<!-- --- -->
 
 
 ## Requirements
@@ -366,7 +366,7 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
----
+<!-- --- -->
 
 
 ## Example Command-Line Usage
@@ -374,7 +374,7 @@ pip install -r requirements.txt
 The three main entry points can be used through command-line arguments.  
 The examples below are intentionally generic; exact arguments may depend on the simulator adapter, algorithm, sampler, and experiment configuration.
 
----
+<!-- --- -->
 
 ### Simulation
 
@@ -403,7 +403,7 @@ python simulate.py \
   --load_path ./results/checkpoints/agent.pt
 ```
 
----
+<!-- --- -->
 
 ### Offline Training
 
@@ -437,7 +437,7 @@ python train_offline.py \
   --device cuda
 ```
 
----
+<!-- --- -->
 
 ### Online Training
 
@@ -474,7 +474,7 @@ python train_online.py \
   --precision float32
 ```
 
----
+<!-- --- -->
 
 ### Typical Workflow
 
